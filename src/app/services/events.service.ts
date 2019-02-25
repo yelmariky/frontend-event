@@ -5,7 +5,7 @@ import 'rxjs/add/operator/map';
 import 'rxjs/add/operator/do';
 import 'rxjs/add/operator/catch';
 import 'rxjs/add/operator/filter';
-import { EventUserModel } from '../model/event-user-Model';
+import { EventUserModel } from '../model/event-user-model';
 import { Subject } from 'rxjs/Subject';
 
 import {HttpClient, HttpRequest, HttpEvent,HttpErrorResponse} from '@angular/common/http';

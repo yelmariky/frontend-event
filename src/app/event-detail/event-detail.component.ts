@@ -1,7 +1,7 @@
 import { Component, OnInit ,EventEmitter, Input, Output } from '@angular/core';
 import { Router, ActivatedRoute, Params  } from '@angular/router'; 
 import 'rxjs/add/operator/switchMap'
-import { EventUserModel } from '../model/event-user-Model';
+import { EventUserModel } from '../model/event-user-model';
 
 import { EventsService } from '../services/events.service';
 
