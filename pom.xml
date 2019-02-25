@@ -7,6 +7,8 @@
 	<artifactId>frontend-event</artifactId>
 	<version>3.0-SNAPSHOT</version>
 	<packaging>pom</packaging>
+	
+	
 
 	<name>frontend-event</name>
 	<description>event angular7</description>
