@@ -1,5 +1,5 @@
 import { Component, OnInit,Input, OnDestroy } from '@angular/core';
-import { EventUserModel } from '../model/event-user-Model';
+import { EventUserModel } from '../model/event-user-model';
 
 import { FormGroup } from '@angular/forms/src/model';
 import { EventsService } from '../services/events.service';
