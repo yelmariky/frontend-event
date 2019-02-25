@@ -1,0 +1,15 @@
+.mesg{
+  /*font-family: Georgia, serif;*/
+    font-size: 15px;
+    font-weight: bold;
+    letter-spacing: 1.6px;
+    color:red;
+}
+
+.mesg_info{
+  /*font-family: Georgia, serif;*/
+    font-size: 10px;
+    font-weight: bold;
+    letter-spacing: 1.6px;
+    color:red;
+}

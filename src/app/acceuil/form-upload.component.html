@@ -1,0 +1,46 @@
+ 
+ <div id="progess_bar" class="progress success">
+       
+             <!--   <div class="progress-bar progress-bar-info progress-bar-striped"
+                    role="progressbar" attr.aria-valuenow="{{progress.percentage}}"
+                    aria-valuemin="0" aria-valuemax="100"
+                    [ngStyle]="{width:progress.percentage+'%'}">
+                    {{progress.percentage}}%</div>
+                    -->
+                      <progress max="100" value="{{progress.percentage}}" data-displayval="{{progress.percentage}}%" data-value="{{progress.percentage}}" [ngStyle]="{width:progress.percentage+'%'}"></progress>
+            </div>
+          <!--  <div class="form-group">
+              <label for="descEvent"  class="required">Description</label>
+              <textarea rows="3" class="form-control" id="descEvent" required [(ngModel)]="eventUser.descEvent" name="descEvent" #descEvent="ngModel"></textarea>
+              <div [hidden]="descEvent.valid || descEvent.pristine" class="alert alert-danger">obligatoire</div>
+            </div>-->
+       
+            <div *ngIf="displayError">  <span class="mesg_info">{{errormessage}}
+              *** problème de upload accept seulement les images</span></div>
+        <div    *ngIf="!quotaError;else quotaok">
+                <div class="form-group row flex-items-xs-middle">
+                        <div class="col-lg-3 col-md-12 col-sm-12 col-xs-12">
+                            Image à charger </div>
+                            <div class="col-lg-5 col-md-12 col-sm-12 col-xs-12">
+                        <button  class="btn btn-default" onclick="document.getElementById('upfile').click()">Ajouter votre image</button>
+                        <input type='file' id="upfile" style="display:none" #fileInput accept=".png, .jpg, .jpeg">
+
+
+                        <button class="btn btn-default" id="uploadbu" name="uploadbu"
+            (click)="upload()">Upload</button><br/>
+            </div>
+            <div class="col-lg-3 col-md-12 col-sm-12 col-xs-12">
+            <span class="mesg_info">L'image ne doit pas dépasser 500ko</span>
+            </div>
+</div>
+</div>
+    
+    <ng-template #quotaok>   
+            
+                    <span class="mesg_info"><span class="mesg_info">{{mesgquotaevent}}</span></span>
+                    <button  class="btn btn-default" disabled>charger votre image</button>
+                        <input type='file' id="upfile" style="display:none" #fileInput accept=".png, .jpg, .jpeg">
+                    
+              
+               
+   </ng-template>  

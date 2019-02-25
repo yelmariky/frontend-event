@@ -1,0 +1,44 @@
+<form (ngSubmit)="sendmail()" #resetMailForm="ngForm">
+           
+
+        <div class="form-group">
+         
+          <input type="text" class="form-control" id="mail" required [(ngModel)]="email" name="mail" #mail="ngModel" placeholder="ex: joe@abc.com"
+            pattern="^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$">
+          <div [hidden]="mail.valid || mail.pristine" class="alert alert-danger">
+            <small>
+              <b>ex: joe@abc.com</b>
+            </small>
+          </div>
+        </div>
+        <div class="modal-footer text-center">
+                <button id="oublipass" name="oublipass" type="submit" [disabled]='!resetMailForm.form.valid' class="btn dropbtn btn-lg">envoi mail</button>
+        </div>
+        </form>
+
+        <div *ngIf="errormail">
+            <span class="mesg">{{errormail}}</span>
+        </div>
+        <div *ngIf="messageUser">
+                <span class="mesg">{{messageUser}}</span>
+                <div class="row" >
+    <div class="col-md-12 col-xs-12">
+        &nbsp;
+    </div>
+  
+  </div>
+
+  <div class="row" >
+      <div class="col-md-12 col-xs-12">
+          <a routerLink='/' class="btn dropbtn btn-lg"><clr-icon shape="rewind"></clr-icon>&nbsp;&nbsp;Retour&nbsp;&nbsp;&nbsp;</a>
+      </div>
+      
+      </div>
+    </div>
+      <div class="row">
+          <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+              <img src="/assets/images/empty.png" width="100%" class="img-responsive">
+              </div>
+              </div>
+
+        

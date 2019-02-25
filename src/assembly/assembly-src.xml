@@ -1,0 +1,36 @@
+<assembly xmlns="http://maven.apache.org/ASSEMBLY/2.0.0"
+          xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+          xsi:schemaLocation="http://maven.apache.org/ASSEMBLY/2.0.0 http://maven.apache.org/xsd/assembly-2.0.0.xsd">
+  <id>distribution</id>
+  <formats>
+    <format>zip</format>
+  </formats>
+  <fileSets>
+    <fileSet>
+      <directory>.</directory>
+      <outputDirectory>.</outputDirectory>
+      <includes>
+        <include>.angular-cli.json</include>
+        <include>.editorconfig</include>
+        <include>.gitignore</include>
+        <include>.npmrc</include>
+        <include>karma.conf.js</include>
+        <include>package.json</include>
+        <include>pom.xml</include>
+        <include>protractor.conf.js</include>
+        <include>README.md</include>
+        <include>tsconfig.json</include>
+        <include>tslint.json</include>
+        <include>typedoc.json</include>
+        <include>zuul-binder.conf.json</include>
+      </includes>
+    </fileSet>
+    <fileSet>
+      <directory>src</directory>
+      <outputDirectory>src</outputDirectory>
+      <includes>
+        <include>*</include>
+      </includes>
+    </fileSet>
+  </fileSets>
+</assembly>

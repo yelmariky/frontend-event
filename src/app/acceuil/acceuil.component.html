@@ -1,0 +1,395 @@
+<clr-main-container>
+  <clr-header>
+    <div class="branding">
+      <a href="#" class="nav-link">
+        <!-- <clr-icon shape="vm-bug"></clr-icon>-->
+        <span class="title">FREE-EVENTS</span>
+      </a>
+    </div>
+    <form (ngSubmit)="searchEvent()" #searchEventForm="ngForm" class="search">
+  
+  
+      <label for="search_input">
+        <input type="text" class="form-control" id="searcht" [(ngModel)]="searchtext" name="searcht" placeholder="chercher des événements...."
+          (click)="searchEvent()">
+      </label>
+  
+    </form>
+    <div class="header-actions" *ngIf="signup && signin;else conectuser">
+    <!--  <clr-dropdown>
+        <button class="nav-icon" clrDropdownTrigger>
+           <clr-icon shape="user"></clr-icon>
+          <clr-icon shape="caret down"></clr-icon>
+        </button>
+  
+        <clr-dropdown-menu *clrIfOpen clrPosition="bottom-right">
+          <button type="button" class="btn btn-primary" (click)="loginForm.form.reset();openSignin()">
+            <clr-icon shape="login"></clr-icon> Se connecter</button>
+  
+          <button type="button" class="btn btn-primary" (click)="userForm.form.reset();openSignup()">
+            <clr-icon shape="new"></clr-icon> S'inscrire</button>
+  
+        </clr-dropdown-menu>
+      </clr-dropdown>
+    -->
+    <button type="button" class="btn btn-primary" (click)="loginForm.form.reset();openSignin()">
+      <clr-icon shape="login"></clr-icon> Se connecter</button>
+
+    <button type="button" class="btn btn-primary" (click)="userForm.form.reset();openSignup()">
+      <clr-icon shape="new"></clr-icon> S'inscrire</button>
+
+    </div>
+  
+    <ng-template #conectuser>
+  
+      <div class="header-actions">
+          
+              <button type="button" id="btcreate_event" (click)="openEvent()" clrPosition="bottom-right" style="cursor: pointer;border:none;" class="alert-success">
+                  <clr-icon shape="plus-circle"></clr-icon> Créer un événement</button>
+                <clr-dropdown>
+                  <button clrDropdownTrigger>
+                    <clr-icon shape="home"></clr-icon> {{user.email}}
+          
+                  </button>
+                  <clr-dropdown-menu *clrIfOpen clrPosition="bottom-right">
+          
+                    <button type="button" id="btcontact" (click)="openContact()" style="cursor: pointer;" clrDropdownItem>
+                      <clr-icon shape="administrator"></clr-icon> contactez-nous</button>
+          
+                    <button type="button" id="btshutdown" (click)="logout()" style="cursor: pointer;" clrDropdownItem>
+                      <clr-icon shape="logout"></clr-icon> déconnecter</button>
+                  
+          
+                  </clr-dropdown-menu> 
+                </clr-dropdown>
+        
+          
+
+              </div>
+    </ng-template>
+  
+  </clr-header>
+  <div *ngIf="quotaevent">
+    <div class="container">
+      <div class="row">
+        <div class="col-sm-12 col-xs-12">
+  
+          <span class="mesg">{{mesgquotaevent}}</span>
+  
+        </div>
+      </div>
+    </div>
+  </div>
+  <div *ngIf="save_user_ok">
+    <div class="alert alert-success alert-sm">
+      <div class="alert-items">
+        <div class="alert-item static">
+          <div class="alert-icon-wrapper">
+            <clr-icon class="alert-icon" shape="check-circle"></clr-icon>
+          </div>
+          <span class="alert-text">
+            {{config.MAIL_CONFIRMLATION}}
+          </span>
+        </div>
+      </div>
+      <button type="button" class="close" aria-label="Close" (click)="save_user_ok = false">
+        <clr-icon aria-hidden="true" shape="close"></clr-icon>
+      </button>
+    </div>
+  
+  </div>
+  <div class="container">
+    <div class="row">
+      <div class="col-sm-12 col-xs-12">
+        <div *ngIf="signup && signin; else withuser">
+          <event [eventuser]="nouser"></event>
+        </div>
+        <ng-template #withuser>
+          <event [eventuser]="iduser"></event>
+        </ng-template>
+  
+      </div>
+    </div>
+  </div>
+  
+  <!-- login client -->
+  <clr-modal [(clrModalOpen)]="opendSignin" [clrModalStaticBackdrop]="true">
+    <h3 class="modal-title">Se connecter</h3>
+    <div class="modal-body">
+      <form (ngSubmit)="signinOnSubmit();" #loginForm="ngForm">
+  
+  
+        <div class="form-group">
+          <label for="mail">Mail</label>
+          <input type="text" class="form-control" id="mail" required [(ngModel)]="user.email" name="mail" #mail="ngModel" autofocus placeholder="ex: joe@abc.com"
+            pattern="^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$">
+          <div [hidden]="mail.valid || mail.pristine" class="alert alert-danger">
+            <small>
+              <b>ex: joe@abc.com</b>
+            </small>
+          </div>
+        </div>
+  
+        <div class="form-group">
+          <label for="passwordup">
+            mot de pass</label>
+          <input type="password" class="form-control" id="passwordup" required [(ngModel)]="user.password" name="passwordup" minlength="8"
+            maxlength="12" #passwordup="ngModel">
+        <!--  <div [hidden]="passwordup.valid || passwordup.pristine" class="alert alert-danger">
+            mot de pass avec au moins 8 caractères
+  
+          </div>
+        -->
+        </div>
+  
+        <div class="modal-footer">
+          <a routerLink="/user/oublipass" class="btn btn-primary">oubli mot de pass</a>
+  
+          <button type="submit" [disabled]='!loginForm.form.valid' class="btn btn-primary">se connecter</button>
+        </div>
+        <div *ngIf="errormessage">
+          <span class="mesg_info">{{errormessage}}</span>
+        </div>
+        <div *ngIf="messageUser">
+          <span class="mesg_info">{{messageUser}}</span>
+        </div>
+      </form>
+    </div>
+  
+  </clr-modal>
+  <!-- enregistrement client-->
+  <clr-modal [(clrModalOpen)]="openedSignup" [clrModalStaticBackdrop]="true">
+    <h3 class="modal-title">Veuillez vous inscrire</h3>
+    <div class="modal-body">
+      <form (ngSubmit)="signupOnSubmit()" #userForm="ngForm">
+  
+        <div class="form-group">
+          <label for="lastnameref">Nom</label>
+          <input type="text" class="form-control" id="lastnameref" required [(ngModel)]="user.lastname" name="lastnameref" #lastname="ngModel" autofocus>
+          <div [hidden]="lastname.valid || lastname.pristine" class="alert alert-danger">Nom est obligatoire</div>
+        </div>
+        <div class="form-group">
+          <label for="firstname">Prénom</label>
+          <input type="text" class="form-control" id="firstname" required [(ngModel)]="user.firstname" name="firstname" #firstname="ngModel">
+          <div [hidden]="firstname.valid || firstname.pristine" class="alert alert-danger">Prènom est obligatoire</div>
+        </div>
+        <div class="form-group">
+          <label for="mailup">Adresse mail</label>
+          <input type="text" class="form-control" id="mailup" required [(ngModel)]="user.email" name="mailup" #mailup="ngModel" placeholder="ex: joe@abc.com"
+            pattern="^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$">
+          <div [hidden]="mailup.valid || mailup.pristine" class="alert alert-danger">
+            <small>
+              <b>ex: joe@abc.com</b>
+            </small>
+          </div>
+        </div>
+  
+        <div class="form-group">
+          <label for="password">Mot de pass</label>
+          <input type="password" class="form-control" id="password" required [(ngModel)]="user.password" name="password" minlength="8"
+            maxlength="12" #password="ngModel" pattern="^(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{8,12}$">
+          <div [hidden]="password.valid || password.pristine" class="alert alert-danger">
+            mot de pass au moins 8 caractères (minuscule,majuscule,chiffre)
+  
+          </div>
+        </div>
+        <div class="form-group">
+          <label for="name">Confirmation mot de pass</label>
+          <input type="password" class="form-control" id="confirmPassword" required validateEqual="password" [(ngModel)]="confirmPassword"
+          name="confirmPassword" #confirmPasswordl="ngModel">
+        <div [hidden]="confirmPasswordl.valid || confirmPasswordl.pristine" class="alert alert-danger">
+          Passwords n'est pas conforme avec le motdepass précédement saisie       </div>
+      
+        </div>
+        <div class="modal-footer">
+  
+          <button type="button" class="btn btn-outline" (click)="openedSignup = false">Cancel</button>
+          <button id="singlebutton" name="singlebutton" type="submit" [disabled]='!userForm.form.valid' class="btn btn-primary">enregistrer</button>
+  
+        </div>
+  
+        <div *ngIf="errormessage">
+          <span class="mesg_info">{{errormessage}}</span>
+        </div>
+        <div *ngIf="messageUser">
+          <span class="mesg_info">{{messageUser}}</span>
+        </div>
+      </form>
+  
+  
+    </div>
+  
+  </clr-modal>
+  <!--   create event -->
+  <clr-modal [(clrModalOpen)]="opendCreateevent" [clrModalSize]="'lg'" [clrModalStaticBackdrop]="true">
+    <h3 class="modal-title">Créer un événement</h3>
+    <div class="modal-body">
+      <form (ngSubmit)="createvent(); " #eventForm="ngForm">
+  
+  
+        <div class="form-group row">
+            <div class="col-lg-3 col-md-12 col-sm-12 col-xs-12">
+          <label for="titleEvent" class="required">Titre </label>
+          </div>
+          <div class="col-lg-8 col-md-12 col-sm-12 col-xs-12">
+          <input type="text" class="form-control" id="titleEvent" required [(ngModel)]="eventUser.titleEvent" name="titleEvent" #titleEvent="ngModel" autofocus>
+          <div [hidden]="titleEvent.valid || titleEvent.pristine" class="alert alert-danger">obligatoire</div>
+        </div>
+        </div>
+        <!--type event et tarif-->
+        <div class="form-group row">
+          <div class="col-lg-3 col-md-12 col-sm-12 col-xs-12">
+            <label for="prixEvent">Type Evénement/Tarif(
+              <clr-icon shape="euro"></clr-icon>)</label>
+          </div>
+          <div class="col-lg-6 col-md-4 col-sm-12 col-xs-12">
+            <div class="select">
+              <select [(ngModel)]="selectedIdTypeEvent" (ngModelChange)="onTypeEventSelected()" name="selectedIdTypeEvent">
+                <option *ngFor="let typeEvent of typeEvents" [value]="typeEvent.idTypeEvent">{{typeEvent.typeEvenement}}</option>
+              </select>
+  
+  
+            </div>
+          </div>
+          <div class="col-lg-2 col-md-4 col-sm-12 col-xs-12">
+            <input type="text" class="form-control" id="prixEvent" placeholder="tarif" [(ngModel)]="eventUser.price" name="prixEvent"
+              #prixEvent="ngModel" size="1" maxlength="3" pattern="^[0-9]{1,3}$">
+            <div [hidden]="prixEvent.valid || prixEvent.pristine" class="alert alert-danger">chiffre obligatoire</div>
+          </div>
+        </div>
+  
+        <div class="form-group row">
+            <div class="col-lg-3 col-md-12 col-sm-12 col-xs-12">
+          <label for="adressEvent" class="required">Adresse </label>
+          </div>
+          <div class="col-lg-8 col-md-12 col-sm-12 col-xs-12">
+          <input type="text" class="form-control" id="adressEvent" required [(ngModel)]="eventUser.adressEvent" name="adressEvent"
+            #adressEvent="ngModel">
+          <div [hidden]="adressEvent.valid || adressEvent.pristine" class="alert alert-danger">obligatoire</div>
+        </div>
+      </div>
+        <!--  upload images-->
+  
+        <div *ngIf="!signin || !signup">
+  
+          <form-upload [iduser]="iduser"></form-upload>
+  
+        </div>
+        <div class="form-group row">
+            <div class="col-lg-3 col-md-12 col-sm-12 col-xs-12">
+  
+          <label for="startEvent">Date </label>
+  </div>
+  
+  <div class="col-lg-4 col-md-12 col-sm-12 col-xs-12">
+          <input class="form-control" type="date" id="startEvent" size="25" [(ngModel)]="eventUser.startEvent" name="startEvent" #startEvent="ngModel"
+            clrDate>
+          <div [hidden]="startEvent.valid || startEvent.pristine" class="alert alert-danger"></div>
+  </div>
+  <div class="col-lg-4 col-md-12 col-sm-12 col-xs-12">
+          <input class="form-control" type="date" id="endEvent" size="25" [(ngModel)]="eventUser.endEvent" name="endEvent" #endEvent="ngModel"
+            clrDate>
+          <div [hidden]="endEvent.valid || endEvent.pristine" class="alert alert-danger"></div>
+  
+        </div>
+        
+  
+  </div>
+  
+  
+        <div class="form-group row">
+            <div class="col-lg-3 col-md-12 col-sm-12 col-xs-12">
+          <label for="descEvent" class="required">Description</label>
+          </div>
+          <div class="col-lg-8 col-md-12 col-sm-12 col-xs-12">
+          <textarea rows="5" maxlength="10000" class="form-control" id="descEvent" required [(ngModel)]="eventUser.descEvent" name="descEvent"
+            #descEvent="ngModel"></textarea>
+          <div [hidden]="descEvent.valid || descEvent.pristine" class="alert alert-danger">obligatoire</div>
+        </div>
+        </div>
+        <div class="form-group row">
+            <div class="col-lg-3 col-md-12 col-sm-12 col-xs-12">
+          <label for="organisation" class="required">Nom de l'organisme</label>
+          </div>
+          <div class="col-lg-8 col-md-12 col-sm-12 col-xs-12">
+          <input type="text" class="form-control" id="organisation" required [(ngModel)]="eventUser.organisation" name="organisation"
+            #organisation="ngModel">
+          <div [hidden]="organisation.valid || organisation.pristine" class="alert alert-danger">obligatoire</div>
+        </div>
+        </div>
+        <div class="form-group row">
+            <div class="col-lg-3 col-md-12 col-sm-12 col-xs-12">
+          <label for="descOrganisation" class="required">Description de l'organisme</label>
+              </div>
+              <div class="col-lg-8 col-md-12 col-sm-12 col-xs-12">   
+  
+          <textarea maxlength="5000" class="form-control" id="descOrganisation" rows="3" required [(ngModel)]="eventUser.descOrganisation"
+            name="descOrganisation" #descOrganisation="ngModel"></textarea>
+          <div [hidden]="descOrganisation.valid || descOrganisation.pristine" class="alert alert-danger">obligatoire</div>
+        </div>
+  </div>
+  
+  
+        <div class="modal-footer">
+          <div *ngIf="errormessageevent">
+            <span class="mesg_info">{{errormessageevent}}</span>
+          </div>
+          <button id="eventbutton" name="eventbutton" type="submit" class="btn btn-primary" [disabled]="!eventForm.form.valid">Créer un événement</button>
+          <!-- <button type="button" id="closevent" name="closevent" data-dismiss="modal" hidden="true">Fermer</button>-->
+        </div>
+  
+      </form>
+  
+    </div>
+  
+  </clr-modal>
+  
+  <!-- contact -->
+  <clr-modal [(clrModalOpen)]="openedContact" [clrModalStaticBackdrop]="true">
+  
+    <h3 class="modal-title">Contacter Nous</h3>
+    <div class="modal-body">
+  
+  
+      <!--Section heading-->
+  
+      <!--Section description-->
+  
+      <form (ngSubmit)="envoiContact(); " #contactForm="ngForm">
+  
+        <div class="row  mt-1">
+          <div class="col-xs-12 col-sm-12 col-md-2 col-lg-2"> <label for="subject" class="required">Sujet </label>
+          </div>
+          <div class="col-xs-12 col-sm-12 col-md-10 col-lg-10"><input type="text" class="form-control" id="subject" size="55" required [(ngModel)]="contact.sujet" name="subject" #subject="ngModel" autofocus>
+            <div [hidden]="subject.valid || subject.pristine" class="alert alert-danger">obligatoire</div>
+            </div>
+        </div>
+        <div class="row  mt-1">
+            <div class="col-xs-12 col-sm-12 col-md-2 col-lg-2"> <label for="message" class="required">Message</label>
+            </div>
+            <div class="col-xs-12 col-sm-12 col-md-10 col-lg-10"><textarea maxlength="5000" class="form-control" id="message" rows="5" required [(ngModel)]="contact.message" name="message"
+              #message="ngModel" maxlength="10000"></textarea>
+            <div [hidden]="message.valid || message.pristine" class="alert alert-danger">obligatoire</div>
+              </div>
+          </div>
+      
+        <div class="modal-footer">
+          <button id="contactbutton" name="contactbutton" type="submit" class="btn btn-primary text-center text-md-left" [disabled]="!contactForm.form.valid">{{config.ENVOI_CONTACT}}</button>
+          <!-- <button type="button" id="closevent" name="closevent" data-dismiss="modal" hidden="true">Fermer</button>-->
+        </div>
+        <div *ngIf="errormessage">
+          <span class="mesg_info">{{errormessage}}</span>
+        </div>
+  
+      </form>
+    </div>
+  
+  
+  
+    <!--Section: Contact v.2-->
+  
+  
+  </clr-modal>
+  
+  <footer></footer>
+  </clr-main-container>

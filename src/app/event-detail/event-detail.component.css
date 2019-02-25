@@ -1,0 +1,11 @@
+.btn-password {
+display: block;
+    width: 165px;
+    height: 35px;
+    background:#3385b7;
+    padding: 10px;
+    text-align: center;
+    border-radius: 5px;
+    color: white;
+    font-weight: bold;
+}

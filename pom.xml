@@ -1,0 +1,125 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+	<modelVersion>4.0.0</modelVersion>
+
+	<groupId>fr.lmsys.frontend</groupId>
+	<artifactId>frontend-event</artifactId>
+	<version>3.0-SNAPSHOT</version>
+	<packaging>pom</packaging>
+
+	<name>frontend-event</name>
+	<description>event angular7</description>
+	<properties>
+		<node.version>v8.11.3</node.version>
+		<npm.version>5.3.0</npm.version>
+	</properties>
+	<build>
+
+		<plugins>
+			<plugin>
+				<groupId>com.github.eirslett</groupId>
+				<artifactId>frontend-maven-plugin</artifactId>
+				<version>1.7.5</version>
+				<configuration>
+					<nodeVersion>${node.version}</nodeVersion>
+					<npmVersion>${npm.version}</npmVersion>
+				</configuration>
+				<executions>
+					<execution>
+						<id>install node and npm</id>
+						<goals>
+							<goal>install-node-and-npm</goal>
+						</goals>
+						<!-- <configuration> -->
+						<!-- <nodeVersion>v7.10.0</nodeVersion> -->
+						<!-- </configuration> -->
+					</execution>
+
+					<execution>
+						<id>npm install --no-optional</id>
+						<goals>
+							<goal>npm</goal>
+						</goals>
+						<configuration>
+							<arguments>install --no-optional</arguments>
+						</configuration>
+					</execution>
+					<execution>
+						<id>angular-cli install</id>
+						<goals>
+							<goal>npm</goal>
+						</goals>
+						<configuration>
+							<arguments>install --no-optional -g angular-cli</arguments>
+						</configuration>
+					</execution>
+					<execution>
+						<id>npm run-script prod</id>
+						<phase>prepare-package</phase>
+						<goals>
+							<goal>npm</goal>
+						</goals>
+						<configuration>
+							<arguments>run-script build-prod</arguments>
+						</configuration>
+					</execution>
+
+
+					<!-- <execution> -->
+					<!-- <id>webpack build</id> -->
+					<!-- <goals> -->
+					<!-- <goal>webpack</goal> -->
+					<!-- </goals> -->
+
+					<!-- optional: the default phase is "generate-resources" -->
+					<!-- <phase>generate-resources</phase> -->
+
+					<!-- <configuration> -->
+					<!-- optional: if not specified, it will run webpack's default build 
+						(and you can remove this whole <configuration> section.) -->
+					<!-- <arguments>-p</arguments> -->
+					<!-- </configuration> -->
+					<!-- </execution> -->
+
+
+				</executions>
+			</plugin>
+
+
+		</plugins>
+
+	</build>
+	<profiles>
+		<profile>
+			<id>prod</id>
+			<build>
+				<plugins>
+					<plugin>
+						<groupId>org.apache.maven.plugins</groupId>
+						<artifactId>maven-assembly-plugin</artifactId>
+						<configuration>
+							<finalName>${project.artifactId}-PROD-${project.version}</finalName>
+						</configuration>
+						<executions>
+							<execution>
+								<phase>package</phase>
+								<goals>
+									<goal>single</goal>
+								</goals>
+								<configuration>
+									<appendAssemblyId>false</appendAssemblyId>
+									<descriptors>
+										<descriptor>src/assembly/assembly-zip.xml</descriptor>
+									</descriptors>
+								</configuration>
+							</execution>
+						</executions>
+					</plugin>
+				</plugins>
+			</build>
+		</profile>
+	</profiles>
+
+
+</project>
