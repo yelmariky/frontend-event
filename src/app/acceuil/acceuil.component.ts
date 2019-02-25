@@ -1,5 +1,5 @@
 import { Component, OnInit, ViewChild, OnDestroy, ElementRef } from '@angular/core';
-import { EventUserModel } from '../model/event-user-Model';
+import { EventUserModel } from '../model/event-user-model';
 
 import { Configuration } from '../app.constants';
 import { UserModel } from '../model/user-model';
