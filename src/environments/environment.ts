@@ -7,6 +7,6 @@ export const environment = {
   production: false,
   
   //apiUrl: 'http://vps541920.ovh.net:8081/event-backend/api/'
-  apiUrl: 'http://localhost:8081/event-backend/api/'
+  apiUrl: 'http://localhost:8881/event-backend/api/'
   
 };

@@ -15,7 +15,8 @@
               <div [hidden]="descEvent.valid || descEvent.pristine" class="alert alert-danger">obligatoire</div>
             </div>-->
        
-            <div *ngIf="displayError">  <span class="mesg_info">{{errormessage}}
+            <div *ngIf="displayError">  <span class="mesg_info">
+              <!--{{errormessage}}-->
               *** problème de upload accept seulement les images</span></div>
         <div    *ngIf="!quotaError;else quotaok">
                 <div class="form-group row flex-items-xs-middle">
